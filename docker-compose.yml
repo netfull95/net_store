@@ -1,0 +1,30 @@
+version: "2"
+services:
+  phoenix:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PG_USERNAME: postgres
+      PG_PASSWORD: postgres
+      PG_HOST: postgres
+    env_file: .dev.env
+    ports:
+      - "8880:4000"
+    volumes:
+      - .:/app
+    links:
+      - postgres
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:9.6.5-alpine
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: net_store_dev
+      PGDATA: /data/pgdata
+    volumes:
+      - ./data:/data
