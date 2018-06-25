@@ -20,3 +20,6 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Source: https://github.com/phoenixframework/phoenix
 
 backend phoenix - Đồ án tốt nghiệp
+
+Class Diagram
+ https://drive.google.com/file/d/1WILhS-ebbLra8U0wLOmK_ni48I-nDkhH/view
