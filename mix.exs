@@ -20,9 +20,15 @@ defmodule NetStore.Mixfile do
   def application do
     [
       mod: {NetStore.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      # extra_applications: [:logger, :runtime_tools]
+      applications: applications(Mix.env)
     ]
   end
+
+  defp applications(:dev), do: applications(:all) ++ [:remix]
+  defp applications(_), do: [
+    :phoenix, :phoenix_pubsub, :phoenix_ecto, :postgrex, :phoenix_html, :phoenix_live_reload, :gettext, :cowboy, :cors_plug
+  ]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -40,7 +46,9 @@ defmodule NetStore.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:cors_plug, "~> 1.5"},
+      {:remix, "~> 0.0.1", only: :dev},
     ]
   end
 

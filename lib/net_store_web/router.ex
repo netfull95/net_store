@@ -2,7 +2,7 @@ defmodule NetStoreWeb.Router do
   use NetStoreWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -11,6 +11,15 @@ defmodule NetStoreWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/api", NetStoreWeb do
+    pipe_through :api
+
+    scope "/users" do
+      options "/login",            UserController,     :options
+      post "/login",           UserController, :login
+    end
   end
 
   scope "/", NetStoreWeb do

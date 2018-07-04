@@ -37,6 +37,8 @@ defmodule NetStoreWeb.Endpoint do
     key: "_net_store_key",
     signing_salt: "87suE7Ie"
 
+  plug CORSPlug
+
   plug NetStoreWeb.Router
 
   @doc """
