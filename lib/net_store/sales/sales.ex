@@ -6,114 +6,210 @@ defmodule NetStore.Sales do
   import Ecto.Query, warn: false
   alias NetStore.Repo
 
-  alias NetStore.Sales.Product
+  alias NetStore.Sales.Order
 
   @doc """
-  Returns the list of products.
+  Returns the list of order.
 
   ## Examples
 
-      iex> list_products()
-      [%Product{}, ...]
+      iex> list_order()
+      [%Order{}, ...]
 
   """
-  def list_products do
-    Repo.all(Product)
+  def list_order do
+    Repo.all(Order)
   end
 
   @doc """
-  Gets a single product.
+  Gets a single order.
 
-  Raises `Ecto.NoResultsError` if the Product does not exist.
+  Raises `Ecto.NoResultsError` if the Order does not exist.
 
   ## Examples
 
-      iex> get_product!(123)
-      %Product{}
+      iex> get_order!(123)
+      %Order{}
 
-      iex> get_product!(456)
+      iex> get_order!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  def get_order!(id), do: Repo.get!(Order, id)
 
   @doc """
-  Creates a product.
+  Creates a order.
 
   ## Examples
 
-      iex> create_product(%{field: value})
-      {:ok, %Product{}}
+      iex> create_order(%{field: value})
+      {:ok, %Order{}}
 
-      iex> create_product(%{field: bad_value})
+      iex> create_order(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_product(attrs \\ %{}) do
-    %Product{}
-    |> Product.changeset(attrs)
+  def create_order(attrs \\ %{}) do
+    %Order{}
+    |> Order.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a product.
+  Updates a order.
 
   ## Examples
 
-      iex> update_product(product, %{field: new_value})
-      {:ok, %Product{}}
+      iex> update_order(order, %{field: new_value})
+      {:ok, %Order{}}
 
-      iex> update_product(product, %{field: bad_value})
+      iex> update_order(order, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_product(%Product{} = product, attrs) do
-    product
-    |> Product.changeset(attrs)
+  def update_order(%Order{} = order, attrs) do
+    order
+    |> Order.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Product.
+  Deletes a Order.
 
   ## Examples
 
-      iex> delete_product(product)
-      {:ok, %Product{}}
+      iex> delete_order(order)
+      {:ok, %Order{}}
 
-      iex> delete_product(product)
+      iex> delete_order(order)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_product(%Product{} = product) do
-    Repo.delete(product)
+  def delete_order(%Order{} = order) do
+    Repo.delete(order)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking product changes.
+  Returns an `%Ecto.Changeset{}` for tracking order changes.
 
   ## Examples
 
-      iex> change_product(product)
-      %Ecto.Changeset{source: %Product{}}
+      iex> change_order(order)
+      %Ecto.Changeset{source: %Order{}}
 
   """
-  def change_product(%Product{} = product) do
-    Product.changeset(product, %{})
+  def change_order(%Order{} = order) do
+    Order.changeset(order, %{})
+  end
+
+  alias NetStore.Sales.Statistic
+
+  @doc """
+  Returns the list of statistic.
+
+  ## Examples
+
+      iex> list_statistic()
+      [%Statistic{}, ...]
+
+  """
+  def list_statistic do
+    Repo.all(Statistic)
+  end
+
+  @doc """
+  Gets a single statistic.
+
+  Raises `Ecto.NoResultsError` if the Statistic does not exist.
+
+  ## Examples
+
+      iex> get_statistic!(123)
+      %Statistic{}
+
+      iex> get_statistic!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_statistic!(id), do: Repo.get!(Statistic, id)
+
+  @doc """
+  Creates a statistic.
+
+  ## Examples
+
+      iex> create_statistic(%{field: value})
+      {:ok, %Statistic{}}
+
+      iex> create_statistic(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_statistic(attrs \\ %{}) do
+    %Statistic{}
+    |> Statistic.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a statistic.
+
+  ## Examples
+
+      iex> update_statistic(statistic, %{field: new_value})
+      {:ok, %Statistic{}}
+
+      iex> update_statistic(statistic, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_statistic(%Statistic{} = statistic, attrs) do
+    statistic
+    |> Statistic.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Statistic.
+
+  ## Examples
+
+      iex> delete_statistic(statistic)
+      {:ok, %Statistic{}}
+
+      iex> delete_statistic(statistic)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_statistic(%Statistic{} = statistic) do
+    Repo.delete(statistic)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking statistic changes.
+
+  ## Examples
+
+      iex> change_statistic(statistic)
+      %Ecto.Changeset{source: %Statistic{}}
+
+  """
+  def change_statistic(%Statistic{} = statistic) do
+    Statistic.changeset(statistic, %{})
   end
 
   alias NetStore.Sales.Category
 
   @doc """
-  Returns the list of categories.
+  Returns the list of category.
 
   ## Examples
 
-      iex> list_categories()
+      iex> list_category()
       [%Category{}, ...]
 
   """
-  def list_categories do
+  def list_category do
     Repo.all(Category)
   end
 

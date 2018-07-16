@@ -17,17 +17,48 @@ defmodule NetStoreWeb.Router do
     pipe_through :api
 
     scope "/users" do
-      options "/login",            UserController,     :options
-      post "/login",           UserController, :login
+      options "/login",             UserController,      :options
+      post "/login",                UserController,      :login
+      post "/register",             UserController,      :register
+      get "/",                      UserController,      :index
+      post "/edit",                 UserController,      :edit
+      post  "/delete",              UserController,      :delete
     end
+
+    scope "/posts" do
+      get   "/",                      PostController, :index
+      post  "/create",                PostController, :create
+      post  "/edit",                  PostController, :edit
+      post  "/delete",                PostController, :delete
+    end
+
+    scope "/orders" do
+      get   "/",                      OrderController, :index
+      post  "/create",                OrderController, :create
+      post  "/edit",                  OrderController, :edit
+      post  "/delete",                OrderController, :delete
+    end
+
+    scope "/statistics" do
+
+    end
+
+    scope "/categories" do
+      get   "/",                      CategoryController, :index
+      post  "/create",                CategoryController, :create
+      post  "/edit",                  CategoryController, :edit
+      post  "/delete",                CategoryController, :delete
+    end
+
+    scope "/products" do
+      get   "/",                      ProductController, :index
+      post  "/create",                ProductController, :create
+      post  "/edit",                  ProductController, :edit
+      post  "/delete",                ProductController, :delete
+      get   "/search",                ProductController, :search
+    end
+
   end
-
-  scope "/", NetStoreWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", PageController, :index
-  end
-
   # Other scopes may use custom stacks.
   # scope "/api", NetStoreWeb do
   #   pipe_through :api

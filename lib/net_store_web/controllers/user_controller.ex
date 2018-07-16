@@ -1,7 +1,6 @@
 defmodule NetStoreWeb.UserController do
   use NetStoreWeb, :controller
 
-  alias NetStore.Accounts
   alias NetStore.Accounts.User
 
   action_fallback NetStoreWeb.FallbackController
@@ -31,37 +30,51 @@ defmodule NetStoreWeb.UserController do
     end
   end
 
-  def index(conn, _params) do
-    users = Accounts.list_users()
-    render(conn, "index.json", users: users)
-  end
-
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", user_path(conn, :show, user))
-      |> render("show.json", user: user)
+  def register(conn, params) do
+    username =  params["userName"]
+    User.get_user_by_username(username)
+    |> case  do
+      nil ->
+        User.create_user(params)
+        json conn, %{success: true, message: "Đăng ký thành công", data: params}
+      _->
+        json conn, %{success: false, message: "Đăng ký thất bại, tài khoản đã bị trùng"}
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    render(conn, "show.json", user: user)
+  def index(conn, params) do
+    type = params["type"]
+    value = params["value"]
+    users = User.get_user(type, value)
+    data = Enum.map(users, fn p ->
+      %{
+        id: p.id,
+        name: p.name,
+        username: p.username,
+        email: p.email,
+        phone_number: p.phone_number,
+        address: p.address,
+        password: p.password,
+        permission: p.permission
+      }
+    end)
+    IO.inspect data
+    json conn, %{success: true, data: data}
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
-
-    with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+   def edit(conn, params) do
+    User.edit_user(params)
+    |> case do
+      {:ok,  _}->
+        json conn, %{success: true}
+      {:error, changeset} ->
+        IO.inspect changeset
+        json conn, %{success: false}
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    with {:ok, %User{}} <- Accounts.delete_user(user) do
-      send_resp(conn, :no_content, "")
-    end
+  def delete(conn, params) do
+    User.delete_user(params)
+    json conn, %{success: true}
   end
 end
